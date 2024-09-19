@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban View C14230092</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .kanban-board {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .kanban-column {
+            width: 15%;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            min-height: 200px;
+        }
+
+        .card {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .header {
+            background-color: #212dd2;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">Kanban View</div>
+
+        <!-- isi board inputan dari user -->
+        <div class="my-4 p-4 border rounded col-md-4 mx-auto">
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="nama">Tugas</label>
+                    <input type="text" class="form-control" id="nama" placeholder=" " required>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <!-- drop down status -->
+                    <select class="form-control" id="status">
+                        <option value="pending">Pending</option>
+                        <option value="planning">Planning</option>
+                        <option value="design">Design</option>
+                        <option value="development">Development</option>
+                        <option value="testing">Testing</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Tambah</button>
+            </form>
+        </div>
+
+        <!-- isi tabel -->
+        <div class="kanban-board">
+            <div class="kanban-column" id="pending">
+                <h6>Pending</h6>
+            </div>
+
+            <div class="kanban-column" id="planning">
+                <h6>Planning</h6>
+            </div>
+
+            <div class="kanban-column" id="design">
+                <h6>Design</h6>
+            </div>
+
+            <div class="kanban-column" id="development">
+                <h6>Development</h6>
+            </div>
+
+            <div class="kanban-column" id="testing">
+                <h6>Testing</h6>
+            </div>
+
+            <div class="kanban-column" id="resolved">
+                <h6>Resolved</h6>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#taskForm').on('submit', function (e) {
+                e.preventDefault();
+                const nama = $('#nama').val();
+                const status = $('#status').val();
+                const card = $('<div>').addClass('card p-2').text(nama);
+                $(`#${status}`).append(card);
+
+                // reset board
+                $('#taskForm')[0].reset();
+
+                // panggil function buat delete task kalo di hapus
+                card.dblclick(function () {
+                    $(this).remove();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
